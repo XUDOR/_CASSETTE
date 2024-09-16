@@ -1,6 +1,11 @@
 # _CASSETTE
 
-_CASSETTE is a straightforward, browser-based MP3 player built with HTML, CSS, and JavaScript. It utilizes the Web Audio API to provide a simple and functional music playback experience.
+_CASSETTE is a straightforward, browser-based MP3 player built with 
+HTML, 
+CSS, 
+and JavaScript. It utilizes the Web Audio API to provide a simple and functional music playback experience.
+
+Node.js & Express
 
 ## About
 

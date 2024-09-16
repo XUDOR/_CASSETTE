@@ -1,4 +1,4 @@
-//server.js
+// server.js
 
 const express = require('express');
 const path = require('path');
@@ -6,13 +6,13 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files from the current directory
+// Serve static files (HTML, CSS, JS, images)
 app.use(express.static(__dirname));
 
 // Serve MP3 files from the 'library' directory
 app.use('/library', express.static(path.join(__dirname, 'library')));
 
-// New endpoint to list MP3 files
+// API to list MP3 files
 app.get('/api/library', (req, res) => {
   const libraryPath = path.join(__dirname, 'library');
   fs.readdir(libraryPath, (err, files) => {
@@ -24,7 +24,7 @@ app.get('/api/library', (req, res) => {
   });
 });
 
-// Catch-all route to serve index.html for any unmatched routes
+// Catch-all route to serve the main HTML file
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });

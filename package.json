@@ -1,8 +1,8 @@
 {
-  "name": "_cassette",
+  "name": "0cassette",
   "version": "1.0.0",
-  "description": "_CASSETTE is a straightforward, browser-based MP3 player built with HTML, CSS, and JavaScript. It utilizes the Web Audio API to provide a simple and functional music playback experience.",
-  "main": "script.js",
+  "description": "0CASSETTE is a straightforward, browser-based MP3 player built with HTML, CSS, and JavaScript. It utilizes the Web Audio API to provide a simple and functional music playback experience.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
@@ -11,9 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

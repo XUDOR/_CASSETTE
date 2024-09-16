@@ -169,7 +169,9 @@ header {
 
 /* Add this to your existing CSS */
 #seekBar {
+  appearance: none;
   width: 200px; /* Adjust as needed */
+  height: 25px;
   border: 1px solid black;
   background-color: #ddd;
   margin: 0 10px;
@@ -177,14 +179,15 @@ header {
 
 #seekBar::-webkit-slider-thumb {
   appearance: none;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 22px;
   background-color: #555;
   cursor: pointer;
   border: 2px solid #333;
 }
 
 #seekBar::-moz-range-thumb {
+  appearance: none;
   width: 16px;
   height: 16px;
   background-color: #555;
@@ -193,6 +196,7 @@ header {
 }
 
 #seekBar::-ms-thumb {
+  appearance: none;
   width: 16px;
   height: 16px;
   background-color: #555;

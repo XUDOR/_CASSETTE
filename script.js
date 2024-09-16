@@ -18,10 +18,15 @@ class MP3Player {
         this.gainNode = null;
         this.isPlaying = false;
         this.currentTrackIndex = 0;
-        this.playlist = ['NFT1_1.mp3', 'rdx_NEROLI_24_2A.mp3']; // Update with your files
+
+        this.libraryPath = 'library/';
+        this.playlist = [
+            { name: 'NFT1_1.mp3', url: null },
+            { name: 'rdx_NEROLI_24_2A.mp3', url: null }
+        ];
 
         this.initEventListeners();
-        this.updateLibraryDisplay();
+        this.loadLibraryFiles().then(() => this.updateLibraryDisplay());
     }
 
     initEventListeners() {
@@ -31,6 +36,19 @@ class MP3Player {
         this.volumeControl.addEventListener("input", (e) => this.changeVolume(e.target.value));
         this.seekBar.addEventListener("input", (e) => this.seek(e.target.value));
         this.fileUploadWrapper.addEventListener("click", () => this.openFileDialog());
+    }
+
+    async loadLibraryFiles() {
+        for (let track of this.playlist) {
+            try {
+                const response = await fetch(this.libraryPath + track.name);
+                const blob = await response.blob();
+                track.url = URL.createObjectURL(blob);
+                console.log(`Loaded ${track.name}`);
+            } catch (error) {
+                console.error(`Error loading ${track.name}:`, error);
+            }
+        }
     }
 
     initializeAudio() {
@@ -66,11 +84,16 @@ class MP3Player {
     loadTrack(index) {
         if (index >= 0 && index < this.playlist.length) {
             this.initializeAudio();
-            this.audioElement.src = `assets/${this.playlist[index]}`;
-            this.fileLabel.textContent = `File: ${this.playlist[index]}`;
-            this.currentTrackIndex = index;
-            this.audioElement.load();
-            console.log("Track loaded:", this.playlist[index]);
+            const track = this.playlist[index];
+            if (track.url) {
+                this.audioElement.src = track.url;
+                this.fileLabel.textContent = `File: ${track.name}`;
+                this.currentTrackIndex = index;
+                this.audioElement.load();
+                console.log("Track loaded:", track.name);
+            } else {
+                console.log("Track not loaded:", track.name);
+            }
         } else {
             console.log("Invalid track index:", index);
         }
@@ -147,11 +170,14 @@ class MP3Player {
     updateLibraryDisplay() {
         this.libraryContainer.innerHTML = '<h2>LIBRARY</h2><ul id="libraryList"></ul>';
         const libraryList = this.libraryContainer.querySelector('#libraryList');
-        
-        this.playlist.forEach((file, index) => {
+
+        this.playlist.forEach((track, index) => {
             const li = document.createElement('li');
-            li.textContent = file;
-            li.addEventListener('click', () => this.loadTrack(index));
+            li.textContent = track.name;
+            li.addEventListener('click', () => {
+                this.loadTrack(index);
+                this.playTrack();
+            });
             libraryList.appendChild(li);
         });
 
@@ -166,7 +192,7 @@ class MP3Player {
 }
 
 // Initialize the player when the DOM is loaded
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const player = new MP3Player();
     console.log("MP3 Player initialized");
 });

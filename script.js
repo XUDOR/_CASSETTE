@@ -2,9 +2,15 @@ class MP3Player {
     constructor() {
         this.playButton = document.getElementById("playButton");
         this.stopButton = document.getElementById("stopButton");
+        this.pauseButton = document.getElementById("pauseButton");
+        this.prevButton = document.getElementById("prevButton");
+        this.nextButton = document.getElementById("nextButton");
+        this.BKshuffleButton = document.getElementById("BKshuffleButton");
+        this.FWDshuffleButton = document.getElementById("FWDshuffleButton");
+        this.repeatButton = document.getElementById("repeatButton");
         this.ejectButton = document.getElementById("ejectButton");
-        this.volumeControl = document.getElementById("volumeControl");
         this.seekBar = document.getElementById("seekBar");
+        this.volumeControl = document.getElementById("volumeControl");
         this.fileLabel = document.getElementById("fileLabel");
         this.fileUploadWrapper = document.querySelector(".file-upload-wrapper");
         this.elapsedTimeElement = document.querySelector(".elapsed-time");
@@ -17,6 +23,8 @@ class MP3Player {
         this.sourceNode = null;
         this.gainNode = null;
         this.isPlaying = false;
+        this.isPaused = false;
+        this.isRepeating = false;
         this.currentTrackIndex = 0;
 
         this.libraryPath = '/library/';
@@ -37,6 +45,12 @@ class MP3Player {
     initEventListeners() {
         this.playButton.addEventListener("click", () => this.playTrack());
         this.stopButton.addEventListener("click", () => this.stopTrack());
+        this.pauseButton.addEventListener("click", () => this.pauseTrack());
+        this.prevButton.addEventListener("click", () => this.previousTrack());
+        this.nextButton.addEventListener("click", () => this.nextTrack());
+        this.BKshuffleButton.addEventListener("click", () => this.skip(-30));
+        this.FWDshuffleButton.addEventListener("click", () => this.skip(30));
+        this.repeatButton.addEventListener("click", () => this.toggleRepeat());
         this.ejectButton.addEventListener("click", () => this.ejectTrack());
         this.volumeControl.addEventListener("input", (e) => this.changeVolume(e.target.value));
         this.seekBar.addEventListener("input", (e) => this.seek(e.target.value));
@@ -87,9 +101,9 @@ class MP3Player {
         });
 
         this.audioElement.addEventListener('ended', () => {
-            this.currentTrackIndex = (this.currentTrackIndex + 1) % this.playlist.length;
-            this.loadTrack(this.currentTrackIndex);
-            this.playTrack();
+            if (!this.isRepeating) {
+                this.nextTrack();
+            }
         });
 
         console.log("Audio initialized");
@@ -122,6 +136,7 @@ class MP3Player {
         }
         this.audioElement.play();
         this.isPlaying = true;
+        this.isPaused = false;
         console.log("Playing track");
     }
 
@@ -130,18 +145,54 @@ class MP3Player {
             this.audioElement.pause();
             this.audioElement.currentTime = 0;
             this.isPlaying = false;
+            this.isPaused = false;
         }
         console.log("Stopping track");
     }
 
-    ejectTrack() {
-        this.stopTrack();
-        this.fileLabel.textContent = "Click to select a file";
-        this.elapsedTimeElement.textContent = "00:00";
-        this.totalTimeElement.textContent = "00:00";
-        this.volAmtElement.textContent = "";
-        this.seekBar.value = 0;
-        console.log("Track ejected");
+    pauseTrack() {
+        if (this.audioElement) {
+            if (this.isPlaying) {
+                this.audioElement.pause();
+                this.isPlaying = false;
+                this.isPaused = true;
+            } else if (this.isPaused) {
+                this.audioElement.play();
+                this.isPlaying = true;
+                this.isPaused = false;
+            }
+        }
+        console.log(this.isPaused ? "Paused track" : "Resumed track");
+    }
+
+    skip(seconds) {
+        if (this.audioElement) {
+            this.audioElement.currentTime += seconds;
+            console.log(`Skipped ${seconds} seconds`);
+        }
+    }
+
+    toggleRepeat() {
+        this.isRepeating = !this.isRepeating;
+        if (this.audioElement) {
+            this.audioElement.loop = this.isRepeating;
+        }
+        console.log(`Repeat ${this.isRepeating ? 'enabled' : 'disabled'}`);
+        // Update repeat button UI if needed
+    }
+
+    nextTrack() {
+        this.currentTrackIndex = (this.currentTrackIndex + 1) % this.playlist.length;
+        this.loadTrack(this.currentTrackIndex);
+        if (this.isPlaying) this.playTrack();
+        console.log("Next track");
+    }
+
+    previousTrack() {
+        this.currentTrackIndex = (this.currentTrackIndex - 1 + this.playlist.length) % this.playlist.length;
+        this.loadTrack(this.currentTrackIndex);
+        if (this.isPlaying) this.playTrack();
+        console.log("Previous track");
     }
 
     changeVolume(value) {
@@ -157,6 +208,16 @@ class MP3Player {
             this.audioElement.currentTime = value;
         }
         console.log("Seek to:", value);
+    }
+
+    ejectTrack() {
+        this.stopTrack();
+        this.fileLabel.textContent = "Click to select a file";
+        this.elapsedTimeElement.textContent = "00:00";
+        this.totalTimeElement.textContent = "00:00";
+        this.volAmtElement.textContent = "";
+        this.seekBar.value = 0;
+        console.log("Track ejected");
     }
 
     openFileDialog() {

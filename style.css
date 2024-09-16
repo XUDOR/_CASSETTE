@@ -205,11 +205,6 @@ header {
   margin: 0 auto;
 }
 
-
-
-
-
-
 main {
   padding: 15px;
   background: #fff;
@@ -225,20 +220,7 @@ main {
   margin: 3px;
 }
 
-.container2 {
-  border: 2px solid gray;
-  margin: 3px;
-  width: 100%;
-  height: 400px;
-  background-color: black;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  resize: both;
-  overflow: auto;
-}
+
 
 .toolbar {
   display: flex;
@@ -254,31 +236,9 @@ main {
 
 }
 
-.sampleCount, .fftInfo {
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  border: 2px solid black;
-  width: 150px;
-  height: 25px;
-  
-} 
 
-.StereoContainer{
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
 
-}
 
-.Left, .Right {
-  border: 2px solid black;
-  width: 250px;
-  height: 250px;
-  margin: 2px;
-  padding: 2px;
-
-}
 
 
 footer {

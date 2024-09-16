@@ -1,3 +1,5 @@
+//script.js
+
 class MP3Player {
     constructor() {
         this.playButton = document.getElementById("playButton");

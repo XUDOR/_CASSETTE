@@ -1,2 +1,2 @@
-# _CASSETTE
-AUDIO FILE PLAYER &amp; LIBRARY // HTML CSS JS
+# _AUDIOVISUAL_1
+>> sandbox experiments  w/ webAudio &amp;&amp; graph theory

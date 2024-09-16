@@ -1,0 +1,300 @@
+/* Reset some default styles */
+body,
+h1,
+p {
+  font-weight: 400;
+  font-size: 1.1em;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: lightgray;
+}
+
+header {
+  background: #333;
+  color: grey;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.header-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  padding: 10px;
+  background-color: #d8dcd2;
+  border: 1px solid white;
+}
+
+.title {
+  padding: 3px;
+  margin: 5px;
+  border-bottom: 2px solid #c2c4bb;
+}
+
+/* General reset for inputs */
+.fileInput,
+#volumeControl,
+#playButton,
+#stopButton {
+  appearance: none;
+  /* Removes default styling */
+  background: none;
+  border: none;
+  padding: 5px;
+  margin: 7px;
+  font-family: inherit;
+  /* Ensures consistent font */
+  font-size: .8em;
+  color: #333;
+  /* Set to your desired color */
+  cursor: pointer;
+  /* Makes buttons look clickable */
+}
+
+/* File upload wrapper */
+.file-upload-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border: 1px solid black;
+  margin-left: 5px;
+  padding: 2px 5px;
+  background-color: #f9f9f9;
+  color: #555;
+  font-size: .8em;
+  cursor: pointer;
+}
+
+/* Hide the actual file input */
+.fileInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Label for file upload */
+.file-upload-label {
+  display: inline-block;
+  padding: 0px;
+  font-size: .9em;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  color: #555;
+  border: 1px solid black;
+  height: auto; /* Adjust to content */
+  margin-left: 7px;
+  font-size: .7em;
+  padding: 4px 5px; /* Adjust padding to ensure it fits in smaller viewports */
+  width: 100%; /* Take full width of the parent container */
+  max-width: 150px; /* Optional: Set a max width to avoid it growing too large */
+  box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+}
+
+.elapsed-time {
+  color: #8fa338; /* Adjust to the shade of green you prefer */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+.total-time {
+  color: #75c4cc; /* Adjust to the shade of blue you prefer */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+
+
+/* Slider custom styling */
+#volumeControl {
+  width: 100px;
+  border: 1px solid black;
+  background-color: #ddd;
+}
+
+/* Custom styling for the slider thumb */
+#volumeControl::-webkit-slider-thumb {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+#volumeControl::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+#volumeControl::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+.VolAmt {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  font-size: .8em;
+  color: #333;
+}
+
+/* Play and stop button custom styling */
+#playButton,
+#stopButton {
+  border: 1px solid black;
+  padding: 5px 5px;
+  background-color: #f9f9f9;
+  color: #555;
+}
+
+#playButton:hover,
+#stopButton:hover,
+.file-upload-wrapper:hover {
+  background-color: black;
+  color: #f4f4f4;
+}
+
+/* Style for Eject button */
+#ejectButton {
+  border: 1px solid black;
+  padding: 3px 3px;
+  background-color: #f9f9f9;
+  color: #555;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#ejectButton:hover {
+  background-color: #555;
+  color: #f4f4f4;
+}
+
+#ejectButton img {
+  width: 20px; /* Adjust size as needed */
+  height: 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+main {
+  padding: 15px;
+  background: #fff;
+}
+
+.container1 {
+  border: 2px solid gray;
+  margin: 3px;
+  width: 100%;
+  font-size: .7em;
+  color: #333;
+  padding: 3px;
+  margin: 3px;
+}
+
+.container2 {
+  border: 2px solid gray;
+  margin: 3px;
+  width: 100%;
+  height: 400px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  resize: both;
+  overflow: auto;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  border: 2px solid gray;
+  padding: 3px;
+  margin: 3px;
+  width: 100%;
+  font-size: .7em;
+  color: #333;
+  text-align: left;
+
+}
+
+.sampleCount, .fftInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  border: 2px solid black;
+  width: 150px;
+  height: 25px;
+  
+} 
+
+.StereoContainer{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+
+}
+
+.Left, .Right {
+  border: 2px solid black;
+  width: 250px;
+  height: 250px;
+  margin: 2px;
+  padding: 2px;
+
+
+
+}
+
+
+footer {
+  background: #333;
+  color: #fff;
+  text-align: right;
+  font-size: .7em;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.footerInfo {
+  margin: 5px;
+  padding: 3px;
+}

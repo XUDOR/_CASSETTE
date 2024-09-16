@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>_AUDIOVISUAL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+      <div class="header-container">
+        <h1 class="title">_AUDIOVISUAL</h1>
+        <div class="file-upload-wrapper">
+          <input type="file" id="fileInput" class="fileInput" accept=".mp3">
+          <span class="file-upload-label" id="fileLabel">File:</span>
+        </div>
+        <div class="time">
+          <span class="elapsed-time">00:00</span>
+          <span class="total-time">00:00</span>
+        </div>
+        
+        <button id="playButton">Play</button>
+        <button id="stopButton">Stop</button>
+        <button id="ejectButton">
+          <img src="assets/icons/eject-black-solid.svg" alt="Eject">
+      </button>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+      <div class="VolAmt"></div>
+      </div>
+    </header>
+    
+    <main>
+        <div class="toolbar">
+          <div class="sampleCount">#</div>
+          <div class="fftInfo">FFT Size: <span id="fftSize">2048</span></div>
+        </div>
+        <div class="container1">1
+          <div class="StereoContainer">
+            <div class="Left"></div>
+            <div class="Right"></div>
+          </div>
+        </div>
+        <div class="container2">==2</div>
+    </main>
+    
+    <footer>
+        <div class="footerInfo">© 2024 RDXENV | Roderick Shoolbraid. All rights reserved.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

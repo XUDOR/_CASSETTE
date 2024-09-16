@@ -164,6 +164,7 @@ header {
   background-color: #7fabcc;
   cursor: pointer;
   border: 1px solid #d9f3e5;
+  border-radius: 50%;
 }
 
 #volumeControl::-moz-range-thumb, #seekBar::-moz-range-thumb {
@@ -200,17 +201,20 @@ header {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
-  margin: 0 5px;
+  
+  transition: background-color 0.3s;
   
 }
 
-.icon-button:hover {
-  transform: scale(1.1);
+
+.control-icon:hover
+{
+ background-color: #304c5c;
+  
 }
 
 .icon-button:active {
-  transform: scale(0.9);
+  background-color: #304c5c;
 }
 
 .control-icon {
@@ -218,7 +222,10 @@ header {
   width: 34px;
   height: 34px;
   border: 1px solid #7fabcc;
+  transition: background-color 0.3s;
 }
+
+
 
 
 
@@ -229,7 +236,7 @@ main {
 }
 
 .container1 {
-  border: 1px solid #58a7af;
+  border: 11px solid #58a7af;
   border-radius: 3px;
   margin: 5px 0;
   width: 98%;
@@ -237,8 +244,8 @@ main {
   color: #065a82;
   padding: 10px;
   background-color: #c5d8d6;
-  max-height: 300px;
-  overflow-y: auto;
+  
+  overflow-x: hidden
 }
 
 #libraryList {
@@ -257,7 +264,9 @@ main {
 }
 
 #libraryList li:hover {
-  background-color: #d0d0d0;
+  background-color: #304c5c;
+  color:#c5d8d6 ;
+  
 }
 
 footer {

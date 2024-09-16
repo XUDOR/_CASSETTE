@@ -167,6 +167,58 @@ header {
   color: #333;
 }
 
+/* Add this to your existing CSS */
+#seekBar {
+  width: 200px; /* Adjust as needed */
+  border: 1px solid black;
+  background-color: #ddd;
+  margin: 0 10px;
+}
+
+#seekBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+#seekBar::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+#seekBar::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #555;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+/* Style for clickable library items */
+#libraryList li {
+  cursor: pointer;
+  padding: 5px;
+  margin: 2px 0;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
+
+#libraryList li:hover {
+  background-color: #e0e0e0;
+}
+
+
+
+
+
+
+
 /* Play and stop button custom styling */
 #playButton,
 #stopButton {
@@ -222,19 +274,7 @@ main {
 
 
 
-.toolbar {
-  display: flex;
-  flex-direction: row;
-  gap: 3px;
-  border: 2px solid gray;
-  padding: 3px;
-  margin: 3px;
-  width: 100%;
-  font-size: .7em;
-  color: #333;
-  text-align: left;
 
-}
 
 
 

@@ -1,187 +1,172 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const playButton = document.getElementById("playButton");
-    const stopButton = document.getElementById("stopButton");
-    const ejectButton = document.getElementById("ejectButton");
-    const volumeControl = document.getElementById("volumeControl");
-    const seekBar = document.getElementById("seekBar");
-    const fileLabel = document.getElementById("fileLabel");
-    const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
-    const elapsedTimeElement = document.querySelector(".elapsed-time");
-    const totalTimeElement = document.querySelector(".total-time");
-    const volAmtElement = document.querySelector(".VolAmt");
+class MP3Player {
+    constructor() {
+        this.playButton = document.getElementById("playButton");
+        this.stopButton = document.getElementById("stopButton");
+        this.ejectButton = document.getElementById("ejectButton");
+        this.volumeControl = document.getElementById("volumeControl");
+        this.seekBar = document.getElementById("seekBar");
+        this.fileLabel = document.getElementById("fileLabel");
+        this.fileUploadWrapper = document.querySelector(".file-upload-wrapper");
+        this.elapsedTimeElement = document.querySelector(".elapsed-time");
+        this.totalTimeElement = document.querySelector(".total-time");
+        this.volAmtElement = document.querySelector(".VolAmt");
+        this.libraryContainer = document.querySelector('.container1');
 
-    let audioContext, audioElement, sourceNode, gainNode;
-    let isPlaying = false;
-    let currentTrackIndex = 0;
+        this.audioContext = null;
+        this.audioElement = null;
+        this.sourceNode = null;
+        this.gainNode = null;
+        this.isPlaying = false;
+        this.currentTrackIndex = 0;
+        this.playlist = ['NFT1_1.mp3', 'rdx_NEROLI_24_2A.mp3']; // Update with your files
 
-    console.log("Initial setup complete");
-
-    // Playlist: Update this array when you add or remove MP3s from your assets folder
-    const playlist = [
-        'NFT1_1.mp3',
-        'rdx_NEROLI_24_2A.mp3'
-        // Add more MP3 filenames here
-    ];
-
-    console.log("Playlist initialized:", playlist);
-
-    // File upload wrapper click event
-    fileUploadWrapper.addEventListener("click", function() {
-        console.log("File upload wrapper clicked");
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = 'audio/*';
-        fileInput.click();
-
-        fileInput.onchange = function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                console.log("File selected:", file.name);
-                loadFile(file);
-            } else {
-                console.log("File selection cancelled");
-            }
-        };
-    });
-
-    function loadFile(file) {
-        const fileURL = URL.createObjectURL(file);
-        if (!audioElement) initializeAudio();
-        audioElement.src = fileURL;
-        fileLabel.textContent = `File: ${file.name}`;
-        audioElement.load();
-        console.log("File loaded:", file.name);
+        this.initEventListeners();
+        this.updateLibraryDisplay();
     }
 
-    function updateLibraryDisplay() {
-        console.log("Updating library display");
-        const container = document.querySelector('.container1') || document.createElement('div');
-        container.innerHTML = '<h2>LIBRARY</h2><ul id="libraryList"></ul>';
-        const libraryList = container.querySelector('#libraryList');
-        
-        playlist.forEach((file, index) => {
-            const li = document.createElement('li');
-            li.textContent = file;
-            li.addEventListener('click', () => loadTrack(index));
-            libraryList.appendChild(li);
-        });
-
-        if (!document.querySelector('.container1')) {
-            container.className = 'container1';
-            document.querySelector('main').appendChild(container);
-        }
-        console.log("Library display updated");
+    initEventListeners() {
+        this.playButton.addEventListener("click", () => this.playTrack());
+        this.stopButton.addEventListener("click", () => this.stopTrack());
+        this.ejectButton.addEventListener("click", () => this.ejectTrack());
+        this.volumeControl.addEventListener("input", (e) => this.changeVolume(e.target.value));
+        this.seekBar.addEventListener("input", (e) => this.seek(e.target.value));
+        this.fileUploadWrapper.addEventListener("click", () => this.openFileDialog());
     }
 
-    function initializeAudio() {
-        console.log("Initializing audio");
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        audioElement = new Audio();
-        sourceNode = audioContext.createMediaElementSource(audioElement);
-        gainNode = audioContext.createGain();
+    initializeAudio() {
+        if (this.audioContext) return;
 
-        sourceNode.connect(gainNode);
-        gainNode.connect(audioContext.destination);
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.audioElement = new Audio();
+        this.sourceNode = this.audioContext.createMediaElementSource(this.audioElement);
+        this.gainNode = this.audioContext.createGain();
 
-        audioElement.addEventListener('loadedmetadata', function() {
-            console.log("Audio metadata loaded");
-            totalTimeElement.textContent = formatTime(audioElement.duration);
-            seekBar.max = audioElement.duration;
+        this.sourceNode.connect(this.gainNode);
+        this.gainNode.connect(this.audioContext.destination);
+
+        this.audioElement.addEventListener('loadedmetadata', () => {
+            this.totalTimeElement.textContent = this.formatTime(this.audioElement.duration);
+            this.seekBar.max = this.audioElement.duration;
         });
 
-        audioElement.addEventListener('timeupdate', function() {
-            elapsedTimeElement.textContent = formatTime(audioElement.currentTime);
-            seekBar.value = audioElement.currentTime;
+        this.audioElement.addEventListener('timeupdate', () => {
+            this.elapsedTimeElement.textContent = this.formatTime(this.audioElement.currentTime);
+            this.seekBar.value = this.audioElement.currentTime;
         });
 
-        audioElement.addEventListener('ended', function() {
-            console.log("Track ended");
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playTrack();
+        this.audioElement.addEventListener('ended', () => {
+            this.currentTrackIndex = (this.currentTrackIndex + 1) % this.playlist.length;
+            this.loadTrack(this.currentTrackIndex);
+            this.playTrack();
         });
 
         console.log("Audio initialized");
     }
 
-    function loadTrack(index) {
-        console.log("Loading track", index);
-        if (index >= 0 && index < playlist.length) {
-            if (!audioElement) initializeAudio();
-            audioElement.src = 'assets/' + playlist[index];
-            fileLabel.textContent = `File: ${playlist[index]}`;
-            currentTrackIndex = index;
-            audioElement.load();
-            console.log("Track loaded:", playlist[index]);
+    loadTrack(index) {
+        if (index >= 0 && index < this.playlist.length) {
+            this.initializeAudio();
+            this.audioElement.src = `assets/${this.playlist[index]}`;
+            this.fileLabel.textContent = `File: ${this.playlist[index]}`;
+            this.currentTrackIndex = index;
+            this.audioElement.load();
+            console.log("Track loaded:", this.playlist[index]);
         } else {
             console.log("Invalid track index:", index);
         }
     }
 
-    function playTrack() {
+    playTrack() {
+        if (!this.audioElement) {
+            this.loadTrack(this.currentTrackIndex);
+        }
+        if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+        this.audioElement.play();
+        this.isPlaying = true;
         console.log("Playing track");
-        if (audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
-        audioElement.play();
-        isPlaying = true;
     }
 
-    function stopTrack() {
+    stopTrack() {
+        if (this.audioElement) {
+            this.audioElement.pause();
+            this.audioElement.currentTime = 0;
+            this.isPlaying = false;
+        }
         console.log("Stopping track");
-        if (audioElement) {
-            audioElement.pause();
-            audioElement.currentTime = 0;
-            isPlaying = false;
-        }
     }
 
-    playButton.addEventListener("click", function() {
-        console.log("Play button clicked");
-        if (!audioElement) {
-            loadTrack(currentTrackIndex);
+    ejectTrack() {
+        this.stopTrack();
+        this.fileLabel.textContent = "Click to select a file";
+        this.elapsedTimeElement.textContent = "00:00";
+        this.totalTimeElement.textContent = "00:00";
+        this.volAmtElement.textContent = "";
+        this.seekBar.value = 0;
+        console.log("Track ejected");
+    }
+
+    changeVolume(value) {
+        if (this.gainNode) {
+            this.gainNode.gain.value = value;
+            this.volAmtElement.textContent = `${Math.round(value * 100)}`;
         }
-        playTrack();
-    });
+        console.log("Volume changed:", value);
+    }
 
-    stopButton.addEventListener("click", function() {
-        console.log("Stop button clicked");
-        stopTrack();
-    });
-
-    ejectButton.addEventListener("click", function() {
-        console.log("Eject button clicked");
-        stopTrack();
-        fileLabel.textContent = "Click to select a file";
-        elapsedTimeElement.textContent = "00:00";
-        totalTimeElement.textContent = "00:00";
-        volAmtElement.textContent = "";
-        seekBar.value = 0;
-    });
-
-    volumeControl.addEventListener("input", function() {
-        console.log("Volume changed:", this.value);
-        if (gainNode) {
-            gainNode.gain.value = this.value;
-            volAmtElement.textContent = `${Math.round(this.value * 100)}`;
+    seek(value) {
+        if (this.audioElement) {
+            this.audioElement.currentTime = value;
         }
-    });
+        console.log("Seek to:", value);
+    }
 
-    seekBar.addEventListener("input", function() {
-        console.log("Seek bar changed:", this.value);
-        if (audioElement) {
-            audioElement.currentTime = this.value;
-        }
-    });
+    openFileDialog() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'audio/*';
+        fileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                this.loadFile(file);
+            }
+        };
+        fileInput.click();
+    }
 
-    function formatTime(seconds) {
+    loadFile(file) {
+        const fileURL = URL.createObjectURL(file);
+        this.initializeAudio();
+        this.audioElement.src = fileURL;
+        this.fileLabel.textContent = `File: ${file.name}`;
+        this.audioElement.load();
+        console.log("File loaded:", file.name);
+    }
+
+    updateLibraryDisplay() {
+        this.libraryContainer.innerHTML = '<h2>LIBRARY</h2><ul id="libraryList"></ul>';
+        const libraryList = this.libraryContainer.querySelector('#libraryList');
+        
+        this.playlist.forEach((file, index) => {
+            const li = document.createElement('li');
+            li.textContent = file;
+            li.addEventListener('click', () => this.loadTrack(index));
+            libraryList.appendChild(li);
+        });
+
+        console.log("Library display updated");
+    }
+
+    formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
+}
 
-    // Display the library when the page loads
-    updateLibraryDisplay();
-
-    console.log("MP3 Player script setup complete");
+// Initialize the player when the DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+    const player = new MP3Player();
+    console.log("MP3 Player initialized");
 });

@@ -19,14 +19,19 @@ class MP3Player {
         this.isPlaying = false;
         this.currentTrackIndex = 0;
 
-        this.libraryPath = 'library/';
-        this.playlist = [
-            { name: 'NFT1_1.mp3', url: null },
-            { name: 'rdx_NEROLI_24_2A.mp3', url: null }
-        ];
+        this.libraryPath = '/library/';
+        this.playlist = [];
+
+        this.loadingIndicator = document.createElement('div');
+        this.loadingIndicator.textContent = 'Loading library...';
+        this.loadingIndicator.style.color = '#333';
+        this.libraryContainer.appendChild(this.loadingIndicator);
 
         this.initEventListeners();
-        this.loadLibraryFiles().then(() => this.updateLibraryDisplay());
+        this.loadLibraryFiles().then(() => {
+            this.libraryContainer.removeChild(this.loadingIndicator);
+            this.updateLibraryDisplay();
+        });
     }
 
     initEventListeners() {
@@ -39,15 +44,24 @@ class MP3Player {
     }
 
     async loadLibraryFiles() {
-        for (let track of this.playlist) {
-            try {
-                const response = await fetch(this.libraryPath + track.name);
-                const blob = await response.blob();
-                track.url = URL.createObjectURL(blob);
-                console.log(`Loaded ${track.name}`);
-            } catch (error) {
-                console.error(`Error loading ${track.name}:`, error);
+        try {
+            const response = await fetch('/api/library');
+            const files = await response.json();
+            this.playlist = files.map(file => ({ name: file, url: null }));
+            
+            for (let track of this.playlist) {
+                try {
+                    const response = await fetch(this.libraryPath + track.name);
+                    const blob = await response.blob();
+                    track.url = URL.createObjectURL(blob);
+                    console.log(`Loaded ${track.name}`);
+                } catch (error) {
+                    console.error(`Error loading ${track.name}:`, error);
+                }
             }
+        } catch (error) {
+            console.error('Error fetching library:', error);
+            this.loadingIndicator.textContent = 'Error loading library. Please try again.';
         }
     }
 
@@ -171,15 +185,22 @@ class MP3Player {
         this.libraryContainer.innerHTML = '<h2>LIBRARY</h2><ul id="libraryList"></ul>';
         const libraryList = this.libraryContainer.querySelector('#libraryList');
 
-        this.playlist.forEach((track, index) => {
+        if (this.playlist.length === 0) {
             const li = document.createElement('li');
-            li.textContent = track.name;
-            li.addEventListener('click', () => {
-                this.loadTrack(index);
-                this.playTrack();
-            });
+            li.textContent = 'No tracks found in the library.';
+            li.style.color = '#333';
             libraryList.appendChild(li);
-        });
+        } else {
+            this.playlist.forEach((track, index) => {
+                const li = document.createElement('li');
+                li.textContent = track.name;
+                li.addEventListener('click', () => {
+                    this.loadTrack(index);
+                    this.playTrack();
+                });
+                libraryList.appendChild(li);
+            });
+        }
 
         console.log("Library display updated");
     }

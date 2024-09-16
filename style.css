@@ -1,7 +1,5 @@
 /* Reset some default styles */
-body,
-h1,
-p {
+body, h1, p {
   font-weight: 400;
   font-size: 1.1em;
   margin: 0;
@@ -11,64 +9,111 @@ p {
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #f4f4f4;
+  background-color: #304c5c;
   color: lightgray;
 }
 
 header {
-  background: #333;
-  color: grey;
-  padding: 10px 0;
+  background: #304c5c;
+  color: #7fabcc;
+  padding: 2px;
   text-align: center;
 }
 
 .header-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-
-  padding: 10px;
-  background-color: #d8dcd2;
+  display: grid;
+  grid-template-areas:
+    "title"
+    "file"
+    "time"
+    "controls"
+    "playback";
+  gap: 5px;
+  padding: 5px;
+  background-color: #065a82;
   border: 1px solid white;
 }
 
+.title-container {
+  grid-area: title;
+}
+
 .title {
+  text-align: left;
   padding: 3px;
   margin: 5px;
-  border-bottom: 2px solid #c2c4bb;
+  border-bottom: 1px solid black;
+  width: 40%;
+}
+
+.file-upload-wrapper {
+  grid-area: file;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-align: left;
+  border: 1px solid black;
+  margin-left: 5px;
+  padding: 2px 5px;
+  background-color: #c5d8d6;
+  color: #555;
+  font-size: .8em;
+  cursor: pointer;
+}
+
+.time {
+  grid-area: time;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c5d8d6;
+  color: #555;
+  border: 1px solid black;
+  height: auto;
+  font-size: .7em;
+  padding: 4px 5px;
+  box-sizing: border-box;
+}
+
+.elapsed-time {
+  color: #8fa338;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.total-time {
+  color: #75c4cc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.playback-controls {
+  grid-area: playback;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* General reset for inputs */
-.fileInput,
-#volumeControl,
-#playButton,
-#stopButton {
+.fileInput, #volumeControl, #playButton, #stopButton {
   appearance: none;
-  /* Removes default styling */
   background: none;
   border: none;
   padding: 5px;
   margin: 7px;
   font-family: inherit;
-  /* Ensures consistent font */
   font-size: .8em;
   color: #333;
-  /* Set to your desired color */
-  cursor: pointer;
-  /* Makes buttons look clickable */
-}
-
-/* File upload wrapper */
-.file-upload-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  border: 1px solid black;
-  margin-left: 5px;
-  padding: 2px 5px;
-  background-color: #f9f9f9;
-  color: #555;
-  font-size: .8em;
   cursor: pointer;
 }
 
@@ -88,201 +133,132 @@ header {
   font-size: .9em;
 }
 
-.time {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f4f4f4;
-  color: #555;
-  border: 1px solid black;
-  height: auto; /* Adjust to content */
-  margin-left: 7px;
-  font-size: .7em;
-  padding: 4px 5px; /* Adjust padding to ensure it fits in smaller viewports */
-  width: 100%; /* Take full width of the parent container */
-  max-width: 150px; /* Optional: Set a max width to avoid it growing too large */
-  box-sizing: border-box; /* Include padding and borders in the element's total width and height */
-}
-
-.elapsed-time {
-  color: #8fa338; /* Adjust to the shade of green you prefer */
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Add ellipsis if text overflows */
-}
-
-.total-time {
-  color: #75c4cc; /* Adjust to the shade of blue you prefer */
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Add ellipsis if text overflows */
-}
-
-
-
 /* Slider custom styling */
-#volumeControl {
+#volumeControl, #seekBar {
+  appearance: none;
   width: 100px;
   border: 1px solid black;
-  background-color: #ddd;
+  background-color: #58a7af;
+}
+
+#seekBar {
+  width: 200px;
+  height: 25px;
+  margin: 0 10px;
 }
 
 /* Custom styling for the slider thumb */
-#volumeControl::-webkit-slider-thumb {
+#volumeControl::-webkit-slider-thumb, #seekBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #7fabcc;
+  cursor: pointer;
+  border: 1px solid #d9f3e5;
+}
+
+#volumeControl::-moz-range-thumb, #seekBar::-moz-range-thumb {
   appearance: none;
   width: 17px;
   height: 17px;
-  background-color: #555;
+  background-color: #7fabcc;
   cursor: pointer;
-  border: 2px solid #333;
+  border: 1px solid #d9f3e5;
 }
 
-#volumeControl::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background-color: #555;
+#volumeControl::-ms-thumb, #seekBar::-ms-thumb {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  background-color: #7fabcc;
   cursor: pointer;
-  border: 2px solid #333;
-}
-
-#volumeControl::-ms-thumb {
-  width: 16px;
-  height: 16px;
-  background-color: #555;
-  cursor: pointer;
-  border: 2px solid #333;
+  border: 1px solid #d9f3e5;
 }
 
 .VolAmt {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  text-align: left;
-  border: 1px solid black;
+  border: 1px solid #c5d8d6;
+  border-radius: 1px;
   width: 25px;
   height: 25px;
-  font-size: .8em;
-  color: #333;
+  font-size: .8em; 
+  color: #7fabcc;
 }
 
-/* Add this to your existing CSS */
-#seekBar {
-  appearance: none;
-  width: 200px; /* Adjust as needed */
-  height: 25px;
-  border: 1px solid black;
-  background-color: #ddd;
-  margin: 0 10px;
-}
-
-#seekBar::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 22px;
-  background-color: #555;
-  cursor: pointer;
-  border: 2px solid #333;
-}
-
-#seekBar::-moz-range-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background-color: #555;
-  cursor: pointer;
-  border: 2px solid #333;
-}
-
-#seekBar::-ms-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background-color: #555;
-  cursor: pointer;
-  border: 2px solid #333;
-}
-
-/* Style for clickable library items */
-#libraryList li {
+.icon-button {
+  background: none;
+  border: none;
   cursor: pointer;
   padding: 5px;
-  margin: 2px 0;
-  background-color: #f0f0f0;
-  border-radius: 3px;
+  margin: 0 5px;
+  
 }
 
-#libraryList li:hover {
-  background-color: #e0e0e0;
+.icon-button:hover {
+  transform: scale(1.1);
 }
 
-
-/* Play and stop button custom styling */
-#playButton,
-#stopButton {
-  border: 1px solid black;
-  padding: 5px 5px;
-  background-color: #f9f9f9;
-  color: #555;
+.icon-button:active {
+  transform: scale(0.9);
 }
 
-#playButton:hover,
-#stopButton:hover,
-.file-upload-wrapper:hover {
-  background-color: black;
-  color: #f4f4f4;
-}
-
-/* Style for Eject button */
-#ejectButton {
-  border: 1px solid black;
-  padding: 3px 3px;
-  background-color: #f9f9f9;
-  color: #555;
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-#ejectButton:hover {
-  background-color: #555;
-  color: #f4f4f4;
+.control-icon {
+  width: 34px;
+  height: 34px;
+  border: none;
 }
 
 #ejectButton img {
-  width: 20px; /* Adjust size as needed */
+  width: 20px;
   height: 20px;
   display: block;
   margin: 0 auto;
 }
 
 main {
-  padding: 15px;
-  background: #fff;
+  padding: 2px;
+  margin: 2px;
+  background: #27597c;
 }
 
 .container1 {
-  border: 2px solid gray;
-  margin: 3px;
-  width: 100%;
+  border: 1px solid #58a7af;
+  border-radius: 3px;
+  margin: 5px 0;
+  width: 98%;
   font-size: .7em;
-  color: #333;
-  padding: 3px;
-  margin: 3px;
+  color: #065a82;
+  padding: 10px;
+  background-color: #c5d8d6;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
+#libraryList {
+  list-style-type: none;
+  padding: 0;
+}
 
+#libraryList li {
+  cursor: pointer;
+  padding: 5px;
+  margin: 2px 0;
+  background-color: #065a82;
+  color: #c5d8d6;
+  border-radius: 3px;
+  transition: background-color 0.3s;
+}
 
-
-
-
-
-
-
+#libraryList li:hover {
+  background-color: #d0d0d0;
+}
 
 footer {
-  background: #333;
-  color: #fff;
+  background: #304c5c;
+  border-top: 2px solid #065a82;
+  color: #c5d8d6;
   text-align: right;
   font-size: .7em;
   padding: 10px 0;
@@ -294,4 +270,23 @@ footer {
 .footerInfo {
   margin: 5px;
   padding: 3px;
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+  .header-container {
+    grid-template-areas:
+      "title title"
+      "file time"
+      "controls controls"
+      "playback playback";
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-container {
+    grid-template-areas:
+      "title file time"
+      "controls controls playback";
+  }
 }

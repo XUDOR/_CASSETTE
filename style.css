@@ -143,9 +143,16 @@ header {
 
 #seekBar {
   width: 200px;
-  height: 25px;
+  height: 30px;
   margin: 0 10px;
 }
+
+
+#volumeControl {
+  width: 200px;
+}
+
+
 
 /* Custom styling for the slider thumb */
 #volumeControl::-webkit-slider-thumb, #seekBar::-webkit-slider-thumb {
@@ -205,17 +212,13 @@ header {
 }
 
 .control-icon {
+  background: none;
   width: 34px;
   height: 34px;
-  border: none;
+  border: 1px solid #7fabcc;
 }
 
-#ejectButton img {
-  width: 20px;
-  height: 20px;
-  display: block;
-  margin: 0 auto;
-}
+
 
 main {
   padding: 2px;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166.25 166.25">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-3 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-4 {
+        font-family: HelveticaNeue-Light, 'Helvetica Neue';
+        font-size: 36px;
+        font-weight: 300;
+      }
+
+      .cls-3 {
+        fill: #9faf7b;
+      }
+    </style>
+  </defs>
+  <g id="_x32_">
+    <g>
+      <g>
+        <rect class="cls-2" x=".5" y=".5" width="165.25" height="165.25"/>
+        <path d="M165.25,1v164.25H1V1h164.25M166.25,0H0v166.25h166.25V0h0Z"/>
+      </g>
+      <line class="cls-1" x1="117.44" y1="61.83" x2="46.73" y2="61.83"/>
+      <polygon class="cls-3" points="46.44 61.8 76.61 79.22 76.61 44.38 46.44 61.8"/>
+      <text class="cls-4" transform="translate(60.92 118.8)"><tspan x="0" y="0">30</tspan></text>
+    </g>
+  </g>
+</svg>

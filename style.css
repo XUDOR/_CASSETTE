@@ -233,15 +233,16 @@ header {
 
 main {
   padding: 2px;
-  margin: 2px;
+  margin: 5px;
   background: #27597c;
+  justify-content: center;
 }
 
 .container1 {
   border: 11px solid #58a7af;
   border-radius: 3px;
   margin: 5px 0;
-  width: 98%;
+  width: 95%;
   font-size: .7em;
   color: #065a82;
   padding: 10px;
@@ -295,6 +296,7 @@ footer {
 @media (max-width: 767px) {
   .container1 {
     width: 90%; /* Slightly reduce width on mobile to prevent potential overflow */
+    padding-bottom: 70px;
   }
   
   #libraryList li {
@@ -314,6 +316,7 @@ footer {
   
   .container1 {
     max-height: 500px; /* Set a max height for larger screens */
+    padding-bottom: 50px;
   }
 }
 

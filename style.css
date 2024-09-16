@@ -96,8 +96,10 @@ header {
   grid-area: controls;
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
+  gap: 5px;
+  padding: 10px 0;
 }
 
 .playback-controls {
@@ -191,44 +193,43 @@ header {
   justify-content: center;
   align-items: center;
   border: 1px solid #c5d8d6;
-  border-radius: 1px;
-  width: 25px;
+  border-radius: 5px;
+  width: 40px;
   height: 25px;
   font-size: .8em; 
   color: #7fabcc;
+  background-color: #065a82;
 }
 
 .icon-button {
   background: none;
   border: none;
   cursor: pointer;
-  
   transition: background-color 0.3s;
-  
+  padding: 0;
+  margin: 0;
 }
 
-
-.control-icon:hover
-{
- background-color: #304c5c;
-  
-}
-
-.icon-button:active {
-  background-color: #304c5c;
-}
 
 .control-icon {
   background: none;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border: 1px solid #7fabcc;
-  transition: background-color 0.3s;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+  padding: 3px;
 }
 
+.control-icon:hover {
+  background-color: #304c5c;
+  transform: scale(1.1);
+}
 
-
-
+.icon-button:active .control-icon {
+  background-color: #304c5c;
+  transform: scale(0.95);
+}
 
 main {
   padding: 2px;
@@ -293,7 +294,7 @@ footer {
 
 @media (max-width: 767px) {
   .container1 {
-    width: 95%; /* Slightly reduce width on mobile to prevent potential overflow */
+    width: 90%; /* Slightly reduce width on mobile to prevent potential overflow */
   }
   
   #libraryList li {

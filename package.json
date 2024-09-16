@@ -1,0 +1,15 @@
+{
+  "name": "_cassette",
+  "version": "1.0.0",
+  "description": "_CASSETTE is a straightforward, browser-based MP3 player built with HTML, CSS, and JavaScript. It utilizes the Web Audio API to provide a simple and functional music playback experience.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

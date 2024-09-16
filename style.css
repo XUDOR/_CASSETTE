@@ -11,6 +11,7 @@ body {
   line-height: 1.6;
   background-color: #304c5c;
   color: lightgray;
+  overflow-x: hidden;
 }
 
 header {
@@ -95,7 +96,7 @@ header {
   grid-area: controls;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 }
 
@@ -244,8 +245,9 @@ main {
   color: #065a82;
   padding: 10px;
   background-color: #c5d8d6;
-  
-  overflow-x: hidden
+  max-height: none; /* Remove max-height to allow container to grow */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #libraryList {
@@ -261,6 +263,7 @@ main {
   color: #c5d8d6;
   border-radius: 3px;
   transition: background-color 0.3s;
+  word-wrap: break-word; 
 }
 
 #libraryList li:hover {
@@ -287,6 +290,18 @@ footer {
 }
 
 /* Media Queries for Responsiveness */
+
+@media (max-width: 767px) {
+  .container1 {
+    width: 95%; /* Slightly reduce width on mobile to prevent potential overflow */
+  }
+  
+  #libraryList li {
+    font-size: 1.1em; /* Increase font size for better readability on mobile */
+    padding: 10px 5px; /* Increase vertical padding for easier tapping */
+  }
+}
+
 @media (min-width: 768px) {
   .header-container {
     grid-template-areas:
@@ -295,6 +310,10 @@ footer {
       "controls controls"
       "playback playback";
   }
+  
+  .container1 {
+    max-height: 500px; /* Set a max height for larger screens */
+  }
 }
 
 @media (min-width: 1024px) {
@@ -302,5 +321,9 @@ footer {
     grid-template-areas:
       "title file time"
       "controls controls playback";
+  }
+  
+  .container1 {
+    max-height: 600px; /* Increase max height for even larger screens */
   }
 }

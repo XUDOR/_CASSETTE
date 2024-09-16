@@ -7,32 +7,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <h1 id="cassette" class="title">_CASSETTE</h1>
-            <div class="file-upload-wrapper">
-                <label id="fileLabel" class="file-upload-label">File:</label>
-            </div>
-            <div class="time">
-                <span class="elapsed-time">00:00</span>
-                <span class="total-time">00:00</span>
-            </div>
-            <button id="playButton">Play</button>
-            <button id="stopButton">Stop</button>
-            <button id="ejectButton">
-                <img src="assets/icons/eject-black-solid.svg" alt="Eject">
-            </button>
-            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1">
-            <div class="VolAmt"></div>
+  <header>
+    <div class="header-container">
+        <h1 id="cassette" class="title">_CASSETTE</h1>
+        <div class="file-upload-wrapper">
+            <span id="fileLabel">Click to select a file</span>
         </div>
-    </header>
+        <div class="time">
+            <span class="elapsed-time">00:00</span>
+            <span class="total-time">00:00</span>
+        </div>
+        <button id="playButton">Play</button>
+        <button id="stopButton">Stop</button>
+        <button id="ejectButton">
+            <img src="assets/icons/eject-black-solid.svg" alt="Eject">
+        </button>
+        <input type="range" id="seekBar" min="0" max="100" value="0">
+        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1">
+        <div class="VolAmt"></div>
+    </div>
+</header>
 
-    <main>
-        <div class="container1">
-            LIBRARY
-        </div>
-        
-    </main>
+<main>
+    <div class="container1">
+        LIBRARY:
+    </div>
+</main>
 
     <footer>
         <div class="footerInfo">

@@ -29,7 +29,8 @@ class MP3Player {
         this.isRepeating = false;
         this.currentTrackIndex = 0;
 
-        this.libraryPath = '/library/';
+        this.libraryPath = 'https://storage.googleapis.com/ip-cassette/cassette1/library/';
+
         this.playlist = [];
 
         this.loadingIndicator = document.createElement('div');

@@ -1,26 +1,33 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
+const { Storage } = require('@google-cloud/storage'); // Add this line
 
 app.use(cors());
 app.use(express.static(__dirname));
 
-// Serve MP3 files from the 'library' directory
+// Serve static files
 app.use('/library', express.static(path.join(__dirname, 'library')));
 
-// API to list MP3 files
-app.get('/api/library', (req, res) => {
-  const fs = require('fs');
-  const libraryPath = path.join(__dirname, 'library');
-  fs.readdir(libraryPath, (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'Unable to scan directory' });
-    }
-    const mp3Files = files.filter(file => path.extname(file).toLowerCase() === '.mp3');
+// Initialize Google Cloud Storage
+const storage = new Storage();
+const bucketName = 'ip-cassette';
+
+// API to list MP3 files from Google Cloud Storage
+app.get('/api/library', async (req, res) => {
+  try {
+    const [files] = await storage.bucket(bucketName).getFiles({ prefix: 'cassette1/library/' });
+    const mp3Files = files
+      .filter(file => file.name.endsWith('.mp3'))
+      .map(file => file.name.replace('cassette1/library/', ''));
     res.json(mp3Files);
-  });
+  } catch (error) {
+    console.error('Error listing files:', error);
+    res.status(500).json({ error: 'Unable to list files' });
+  }
 });
 
 // Catch-all route to serve the main HTML file

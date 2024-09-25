@@ -39,3 +39,7 @@ debug.log
 # OS generated files
 Thumbs.db
 *.DS_Store
+
+# credential file
+
+interstellar-public-06e2d0fb6f02.json
